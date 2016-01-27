@@ -34,19 +34,19 @@ static char UIScrollViewPullToRefreshView;
         view.scrollView = self;
         view.frame = CGRectMake((self.bounds.size.width - view.bounds.size.width)/2,
                                 -view.bounds.size.height, view.bounds.size.width, view.bounds.size.height);
-        view.originalTopInset = self.contentInset.top;
+
+        view.portraitTopInset = 64.0;
+        if(IS_IPHONE6PLUS)
+            view.landscapeTopInset = 44.0;
+        else
+            view.landscapeTopInset = 32.0;
         
-
-        if(cEqualFloats(self.contentInset.top, 0.00, cDefaultFloatComparisonEpsilon) &&cEqualFloats(self.frame.origin.y, 0.0, cDefaultFloatComparisonEpsilon))
-        {
-            view.portraitTopInset = 64.0;
-            view.originalTopInset = 64.0;
-
-            if(IS_IPHONE6PLUS)
-                view.landscapeTopInset = 44.0;
-            else
-                view.landscapeTopInset = 32.0;
-
+        if (self.contentInset.top > 0) {
+            view.originalTopInset = self.contentInset.top;
+        } else if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+            view.originalTopInset = view.landscapeTopInset;
+        } else {
+            view.originalTopInset = view.portraitTopInset;
         }
         
         [self addSubview:view];
