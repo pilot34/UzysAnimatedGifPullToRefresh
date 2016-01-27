@@ -408,9 +408,7 @@
             
         } animation:NO];
     }
-    self.alpha = 1.0f;
-
-
+//    self.alpha = 1.0f;
 }
 
 #pragma mark - public method
